@@ -28,14 +28,15 @@ public:
 
 	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
-	int32 GetHiddenWordLength() const;
+	int32 GetWordLength() const;
 
 	bool IsGameWon();
 	EGuessStatus CheckGuessValidity(FString Guess);
-	FBullCowCount SubmitGuess(FString Guess);
+	FBullCowCount SubmitValidGuess(FString Guess);
 
 private:
 	int32 MyCurrentTry;
 	int32 MyMaxTries;
 	FString MyHiddenWord;
+	bool bGameIsWon;
 };

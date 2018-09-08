@@ -13,6 +13,7 @@ void FBullCowGame::Reset()
 
 	MyCurrentTry = 1;	
 	MyHiddenWord = "planet";
+	bGameIsWon = false;
 	return;
 }
 
@@ -22,21 +23,21 @@ int32 FBullCowGame::GetMaxTries() const  {  return MyMaxTries;  }
 
 int32 FBullCowGame::GetCurrentTry() const  {	return MyCurrentTry;	}
 
-int32 FBullCowGame::GetHiddenWordLength() const  {	return MyHiddenWord.length();  }
+int32 FBullCowGame::GetWordLength() const  {	return MyHiddenWord.length();  }
 
-bool FBullCowGame::IsGameWon()	{  return false;  }
+bool FBullCowGame::IsGameWon()	{  return bGameIsWon;  }
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess)	{  
 	
 	if (false) // If the guess isn't an isogram
 	{
-		return EGuessStatus::Not_Isogram;
+		return EGuessStatus::Not_Isogram; // TODO write a function for this
 	} 
 	else if (false) // If the guess isn't all lowercase
 	{
-		return EGuessStatus::Not_Lowercase;
+		return EGuessStatus::Not_Lowercase; // TODO write a function for this
 	}
-	else if (Guess.length() != GetHiddenWordLength()) // If the guess length is wrong
+	else if (Guess.length() != GetWordLength()) // If the guess length is wrong
 	{
 		return EGuessStatus::Worng_Length;
 	}
@@ -47,39 +48,36 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess)	{
 
 }
 
-FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
+FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 {
-	// Increment the number of turn
 	MyCurrentTry++;
-
-	// Setup a return variable
 	FBullCowCount BullCowCount;
+	int32 WordLength = MyHiddenWord.length();
 
-	int32 HiddenWordLength = MyHiddenWord.length();
-
-	// Loop through all letters in the guess
-	for (int32 i = 0; i < HiddenWordLength; i++)
+	for (int32 i = 0; i < WordLength; i++) // Loop through all letters in the HiddendWord
 	{
-		// Compare the letter against the hidden word
-		for (int32 j = 0; j < HiddenWordLength; j++)
+		for (int32 j = 0; j < WordLength; j++) // Compare the letter against the guess
 		{
-			// If they match then
-			if (MyHiddenWord[i] == Guess[j])
+			if (MyHiddenWord[i] == Guess[j]) // If they match then
 			{
-				// If they're in the same place
-				if (i == j)
+				if (i == j) // If they're in the same place
 				{
-					// Increment bulls
 					BullCowCount.Bulls++;
 				}
 				else
 				{
-					// Increment Cows
 					BullCowCount.Cows++;
 				}
 			} 
 		}
 	}
-
+	if (BullCowCount.Bulls == WordLength)
+	{
+		bGameIsWon = true;
+	}
+	else
+	{
+		bGameIsWon = false;
+	}
 	return BullCowCount;
 }
