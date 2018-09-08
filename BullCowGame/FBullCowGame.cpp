@@ -1,10 +1,12 @@
 #include "pch.h"
 #include "FBullCowGame.h"
 
+
 FBullCowGame::FBullCowGame()
 {
 	Reset();
 }
+
 
 void FBullCowGame::Reset()
 {
@@ -27,11 +29,12 @@ int32 FBullCowGame::GetWordLength() const  {	return MyHiddenWord.length();  }
 
 bool FBullCowGame::IsGameWon()	{  return bGameIsWon;  }
 
+
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess)	{  
 	
-	if (false) // If the guess isn't an isogram
+	if (!IsIsogram(Guess)) // If the guess isn't an isogram
 	{
-		return EGuessStatus::Not_Isogram; // TODO write a function for this
+		return EGuessStatus::Not_Isogram;
 	} 
 	else if (false) // If the guess isn't all lowercase
 	{
@@ -47,6 +50,7 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess)	{
 	}
 
 }
+
 
 FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 {
@@ -80,4 +84,18 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 		bGameIsWon = false;
 	}
 	return BullCowCount;
+}
+
+
+bool FBullCowGame::IsIsogram(FString Guess) const 
+{ 
+	// Treat 0 and 1 letter words as isogram
+
+	// Loop through all letters in the Guess
+		// If any letter is duplicated in the map
+			// return false
+		// Otherwise
+			// Add the letterto the map
+
+	return true; // For example where 0/1 is entered
 }
