@@ -4,33 +4,34 @@
 #define TMap std::map
 
 
-FBullCowGame::FBullCowGame()
-{
-	Reset();
-}
-
-
-void FBullCowGame::Reset()
-{
-	constexpr int32 MAX_TRIES = 8;
-	MyMaxTries = MAX_TRIES;
-
-	MyCurrentTry = 1;	
-	MyHiddenWord = "planet";
-	bGameIsWon = false;
-	return;
-}
-
+FBullCowGame::FBullCowGame()  {  Reset();  } // Default constructor
 
 void FBullCowGame::NewCurrentTry(int32 NewTry)  {  MyCurrentTry = NewTry;  }
-
-int32 FBullCowGame::GetMaxTries() const  {  return MyMaxTries;  }
 
 int32 FBullCowGame::GetCurrentTry() const  {	return MyCurrentTry;	}
 
 int32 FBullCowGame::GetWordLength() const  {	return MyHiddenWord.length();  }
 
 bool FBullCowGame::IsGameWon()	{  return bGameIsWon;  }
+
+int32 FBullCowGame::GetMaxTries() const { 
+
+	TMap <int32, int32> WordLengthToMaxTries{ {3,5}, {4,7}, {5,10}, {6,12}, { 7,18} };
+
+	return WordLengthToMaxTries[MyHiddenWord.length()]; 
+
+}
+
+
+void FBullCowGame::Reset()
+{
+	constexpr int32 MAX_TRIES{8};
+
+	MyCurrentTry = 1;
+	MyHiddenWord = "planet";
+	bGameIsWon = false;
+	return;
+}
 
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess)	{  
@@ -61,9 +62,9 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 	FBullCowCount BullCowCount;
 	int32 WordLength = MyHiddenWord.length();
 
-	for (int32 i = 0; i < WordLength; i++) // Loop through all letters in the HiddendWord
+	for (int32 i{0}; i < WordLength; i++) // Loop through all letters in the HiddendWord
 	{
-		for (int32 j = 0; j < WordLength; j++) // Compare the letter against the guess
+		for (int32 j{0}; j < WordLength; j++) // Compare the letter against the guess
 		{
 			if (MyHiddenWord[i] == Guess[j]) // If they match then
 			{
