@@ -25,8 +25,6 @@ int32 FBullCowGame::GetMaxTries() const {
 
 void FBullCowGame::Reset()
 {
-	constexpr int32 MAX_TRIES{8};
-
 	MyCurrentTry = 1;
 	MyHiddenWord = "planet";
 	bGameIsWon = false;
