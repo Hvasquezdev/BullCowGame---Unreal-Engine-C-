@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "FBullCowGame.h"
+#include <map>
+#define TMap std::map
 
 
 FBullCowGame::FBullCowGame()
@@ -19,6 +21,7 @@ void FBullCowGame::Reset()
 	return;
 }
 
+
 void FBullCowGame::NewCurrentTry(int32 NewTry)  {  MyCurrentTry = NewTry;  }
 
 int32 FBullCowGame::GetMaxTries() const  {  return MyMaxTries;  }
@@ -36,9 +39,9 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess)	{
 	{
 		return EGuessStatus::Not_Isogram;
 	} 
-	else if (false) // If the guess isn't all lowercase
+	else if (!IsLowerCase(Guess)) // If the guess isn't all lowercase
 	{
-		return EGuessStatus::Not_Lowercase; // TODO write a function for this
+		return EGuessStatus::Not_Lowercase;
 	}
 	else if (Guess.length() != GetWordLength()) // If the guess length is wrong
 	{
@@ -87,15 +90,36 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 }
 
 
-bool FBullCowGame::IsIsogram(FString Guess) const 
+bool FBullCowGame::IsIsogram(FString Word) const 
 { 
 	// Treat 0 and 1 letter words as isogram
+	if (Word.length() < 1) {  return true;  }
 
-	// Loop through all letters in the Guess
-		// If any letter is duplicated in the map
-			// return false
-		// Otherwise
-			// Add the letterto the map
+	TMap <char, bool> LetterSeen;
 
+	for (auto Letter : Word) // Loop through all letters in the word
+	{
+		Letter = tolower(Letter);
+		if (LetterSeen[Letter]) // If any letter is in the map
+		{
+			return false;
+		}
+		else
+		{
+			LetterSeen[Letter] = true; // Add the letterto the map
+		}
+	}
 	return true; // For example where 0/1 is entered
+}
+
+bool FBullCowGame::IsLowerCase(FString Word) const
+{
+	for (auto Letter : Word)
+	{
+		if (!islower(Letter))
+		{
+			return false;
+		}
+	}
+	return true;
 }

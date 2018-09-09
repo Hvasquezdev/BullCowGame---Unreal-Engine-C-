@@ -23,7 +23,7 @@ class FBullCowGame
 public:
 	FBullCowGame();
 
-	void Reset(); // TODO make a more rich return value
+	void Reset();
 	void NewCurrentTry(int32 NewTry);
 
 	int32 GetMaxTries() const;
@@ -41,4 +41,5 @@ private:
 	bool bGameIsWon;
 
 	bool IsIsogram(FString) const;
+	bool IsLowerCase(FString) const;
 };
