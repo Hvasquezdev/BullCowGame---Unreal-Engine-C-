@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "FBullCowGame.h"
 #include <map>
+// To make the syntax unreal engine friendly
 #define TMap std::map
 
 
@@ -34,15 +35,15 @@ void FBullCowGame::Reset()
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess)	{  
 	
-	if (!IsIsogram(Guess)) // If the guess isn't an isogram
+	if (!IsIsogram(Guess))
 	{
 		return EGuessStatus::Not_Isogram;
 	} 
-	else if (!IsLowerCase(Guess)) // If the guess isn't all lowercase
+	else if (!IsLowerCase(Guess))
 	{
 		return EGuessStatus::Not_Lowercase;
 	}
-	else if (Guess.length() != GetWordLength()) // If the guess length is wrong
+	else if (Guess.length() != GetWordLength())
 	{
 		return EGuessStatus::Worng_Length;
 	}
